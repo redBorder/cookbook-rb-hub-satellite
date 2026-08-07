@@ -7,24 +7,24 @@ module HubSatellite
           'args' => ['$action', '$service'],
           'param_rules' => {
             'action' => {
-              'allowed_values' => ['status', 'restart', 'reload'],
-              'required' => true
+              'allowed_values' => %w[status restart reload],
+              'required' => true,
             },
             'service' => {
               'regex' => '^[a-zA-Z0-9_-]+$',
-              'required' => true
-            }
+              'required' => true,
+            },
           },
-          'timeout_seconds' => 30
+          'timeout_seconds' => 30,
         },
         'cat_log' => {
           'type' => 'file_read',
           'allowed_paths' => [
             '/var/log/kafka/*.log',
-            '/var/log/syslog'
+            '/var/log/syslog',
           ],
-          'max_bytes' => 524288
-        }
+          'max_bytes' => 524288,
+        },
       }
     end
   end
