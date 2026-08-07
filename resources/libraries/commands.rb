@@ -7,7 +7,7 @@ module HubSatellite
           'args' => ['$action', '$service'],
           'param_rules' => {
             'action' => {
-              'allowed_values' => %w[status restart reload],
+              'allowed_values' => %w(status restart reload),
               'required' => true,
             },
             'service' => {

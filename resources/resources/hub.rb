@@ -1,6 +1,8 @@
 # Cookbook:: rb-hub-satellite
 # Resource:: hub
 
+unified_mode true
+
 resource_name :rbhub_config
 provides :rbhub_config
 

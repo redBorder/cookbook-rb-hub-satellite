@@ -120,7 +120,7 @@ action :register do
         action :nothing
       end.run_action(:run)
 
-      node.normal['redborder']['redborder-hub']['registered'] = true
+      node['redborder']['redborder-hub']['registered'] = true
       Chef::Log.info('redborder-hub service has been registered to consul')
     end
   rescue => e
@@ -136,7 +136,7 @@ action :deregister do
         action :nothing
       end.run_action(:run)
 
-      node.normal['redborder']['redborder-hub']['registered'] = false
+      node['redborder']['redborder-hub']['registered'] = false
       Chef::Log.info('redborder-hub service has been deregistered from consul')
     end
   rescue => e

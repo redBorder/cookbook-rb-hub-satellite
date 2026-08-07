@@ -1,6 +1,8 @@
 # Cookbook:: rb-hub-satellite
 # Resource:: satellite
 
+unified_mode true
+
 resource_name :rbsat_config
 provides :rbsat_config
 
