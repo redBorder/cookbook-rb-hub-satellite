@@ -53,7 +53,7 @@ action :add do
     end
 
     resource_data = {
-      'addr' => ":#{hub_port}",
+      'addr' => "0.0.0.0:#{hub_port}",
       'auth_token' => auth_token,
       'authorized_keys_dir' => authorized_keys_dir,
       'my_url' => my_url,
