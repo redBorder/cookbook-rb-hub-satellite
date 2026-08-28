@@ -36,20 +36,29 @@ action :add do
       action :create
     end
 
-    my_url = "http://#{node['ipaddress_sync']}:#{hub_port}"
+    def resolve_ip(n)
+      ip = n['ipaddress_sync']
+      ip = n['ipaddress'] if ip.nil? || ip.to_s.empty?
+      ip
+    end
+
+    my_ip = resolve_ip(node)
+    my_url = "http://#{my_ip}:#{hub_port}"
+
+    own_short_hostname = node['hostname'].to_s.split('.').first
     peer_urls = []
 
     hub_hosts.each do |hub_hostname|
       short_hostname = hub_hostname.to_s.split('.').first
-      next if short_hostname.nil? || short_hostname == node['hostname']
+      next if short_hostname.nil? || short_hostname == own_short_hostname
 
       peer_node = search(:node, "hostname:#{short_hostname}").first
       next if peer_node.nil?
 
-      peer_sync_ip = peer_node['ipaddress_sync']
-      next if peer_sync_ip.nil? || peer_sync_ip.empty?
+      peer_ip = resolve_ip(peer_node)
+      next if peer_ip.nil? || peer_ip.to_s.empty?
 
-      peer_urls << "http://#{peer_sync_ip}:#{hub_port}"
+      peer_urls << "http://#{peer_ip}:#{hub_port}"
     end
 
     resource_data = {
@@ -57,7 +66,7 @@ action :add do
       'auth_token' => auth_token,
       'authorized_keys_dir' => authorized_keys_dir,
       'my_url' => my_url,
-      'peers' => peer_urls,
+      'peers' => peer_urls.sort.uniq,
       'advertise_peers' => advertise_peers,
     }
 

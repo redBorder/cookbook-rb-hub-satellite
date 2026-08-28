@@ -4,5 +4,5 @@
   "authorized_keys_dir": <%= @resource['authorized_keys_dir'].to_json %>,
   "my_url": <%= @resource['my_url'].to_json %>,
   "peers": <%= Chef::JSONCompat.to_json(@resource['peers']) %>,
-  "advertise_peers": <%= @resource['advertise_peers'] %>
+  "advertise_peers": <%= @resource['advertise_peers'].to_json %>
 }
