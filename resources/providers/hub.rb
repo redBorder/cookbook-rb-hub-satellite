@@ -9,7 +9,6 @@ action :add do
   begin
     user = new_resource.user
     config_dir = new_resource.config_dir
-    cdomain = new_resource.cdomain
     hub_hosts = new_resource.hub_hosts
     hub_port = new_resource.hub_port
     auth_token = new_resource.auth_token
