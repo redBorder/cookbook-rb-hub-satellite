@@ -1,15 +1,14 @@
-PACKAGE_NAME?=	cookbook-rb-hub-satellite
+PACKAGE_NAME?=cookbook-rb-hub-satellite
 
-VERSION?=	$(shell git describe --abbrev=6 --tags HEAD --always | sed 's/-/_/g')
+VERSION?=$(shell git describe --abbrev=6 --tags HEAD --always | sed 's/-/_/g')
 
-BUILD_NUMBER?= 1
+BUILD_NUMBER?=1
 
 MOCK_CONFIG?=default
 
 RESULT_DIR?=pkgs
 
 all: rpm
-
 
 SOURCES:
 	mkdir -p SOURCES

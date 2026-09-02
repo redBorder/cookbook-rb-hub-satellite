@@ -7,5 +7,7 @@ cookbook-rb-hub-satellite CHANGELOG
     - [2daeedc] Add cookbook-rb-hub-satellite
 
 ## 0.0.1
------
-- [vimesa] - Initial skel
+
+  - vimesa
+    - [aa2d5c7] Initial skel
+
