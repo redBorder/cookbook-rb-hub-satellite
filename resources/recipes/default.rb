@@ -10,4 +10,3 @@ end
 if node.dig('redborder', 'services', 'redborder-satellite')
   include_recipe 'rb-hub-satellite::satellite'
 end
-

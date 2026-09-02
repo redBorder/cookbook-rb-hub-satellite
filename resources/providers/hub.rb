@@ -17,8 +17,6 @@ action :add do
     service_name = 'redborder-hub'
     package_name = 'redborder-hub'
 
-
-
     dnf_package package_name do
       action :upgrade
     end

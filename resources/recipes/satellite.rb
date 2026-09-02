@@ -6,4 +6,3 @@
 rbsat_config 'Configure redborder-satellite' do
   action :add
 end
-
