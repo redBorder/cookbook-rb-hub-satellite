@@ -3,10 +3,11 @@
 # Copyright:: 2026, redborder
 # License:: Affero General Public License, Version 3
 
-rbhub_config 'Configure redborder-hub' do
-  action :add
+if node.dig('redborder', 'services', 'redborder-hub')
+  include_recipe 'rb-hub-satellite::hub'
 end
 
-rbsat_config 'Configure redborder-satellite' do
-  action :add
+if node.dig('redborder', 'services', 'redborder-satellite')
+  include_recipe 'rb-hub-satellite::satellite'
 end
+

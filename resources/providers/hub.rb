@@ -9,6 +9,7 @@ action :add do
   begin
     user = new_resource.user
     config_dir = new_resource.config_dir
+    cdomain = new_resource.cdomain
     hub_hosts = new_resource.hub_hosts
     hub_port = new_resource.hub_port
     auth_token = new_resource.auth_token
@@ -16,6 +17,8 @@ action :add do
     advertise_peers = new_resource.advertise_peers
     service_name = 'redborder-hub'
     package_name = 'redborder-hub'
+
+
 
     dnf_package package_name do
       action :upgrade
@@ -78,7 +81,7 @@ action :add do
       cookbook 'rb-hub-satellite'
       retries 2
       variables(resource: resource_data)
-      notifies :reload, "service[#{service_name}]", :delayed
+      notifies :restart, "service[#{service_name}]", :delayed
     end
 
     service service_name do

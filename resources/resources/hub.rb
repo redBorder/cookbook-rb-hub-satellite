@@ -9,6 +9,7 @@ provides :rbhub_config
 actions :add, :remove, :register, :deregister
 default_action :add
 
+attribute :cdomain, kind_of: String, default: 'redborder.cluster'
 attribute :user, kind_of: String, default: 'redborder-hub'
 attribute :config_dir, kind_of: String, default: '/etc/redborder-hub'
 attribute :hub_hosts, kind_of: Array, default: []
