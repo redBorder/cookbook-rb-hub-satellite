@@ -1,6 +1,11 @@
 cookbook-rb-hub-satellite CHANGELOG
 ===============
 
+## 0.1.0
+
+  - Nils
+    - [01da697] fix bug if redborder-hub was down on 1 node
+
 ## 0.0.2
 
   - vimesa
