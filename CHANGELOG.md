@@ -1,6 +1,11 @@
 cookbook-rb-hub-satellite CHANGELOG
 ===============
 
+## 0.1.1
+
+  - manegron
+    - [3e80963] Upload cookbook only if opscode-erchef is active
+
 ## 0.1.0
 
   - Nils
