@@ -31,13 +31,16 @@ action :add do
       recursive true
     end
 
+    commands = (commands_input && !commands_input.empty?) ? commands_input : default_satellite_commands
+    commands = commands.merge(ftp_backup_satellite_commands) if new_resource.ftp_backup
+
     resource_data = {
       'hub_url' => hub_url,
       'auth_token' => auth_token,
       'private_key_path' => private_key_path,
       'agent_id' => agent_id,
       'insecure_skip_verify' => insecure_skip_verify,
-      'commands' => (commands_input && !commands_input.empty?) ? commands_input : default_satellite_commands,
+      'commands' => commands,
     }
 
     template "#{config_dir}/satellite.json" do
