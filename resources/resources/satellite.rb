@@ -17,3 +17,6 @@ attribute :private_key_path, kind_of: String, default: '/etc/redborder-satellite
 attribute :agent_id, kind_of: String, default: lazy { node['hostname'] }
 attribute :insecure_skip_verify, kind_of: [TrueClass, FalseClass], default: true
 attribute :commands, kind_of: Hash, default: {}
+# Also register the config-backup FTP account commands
+# (HubSatellite::Commands#ftp_backup_satellite_commands).
+attribute :ftp_backup, kind_of: [TrueClass, FalseClass], default: false
