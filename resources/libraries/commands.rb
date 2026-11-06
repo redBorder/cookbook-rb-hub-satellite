@@ -70,5 +70,25 @@ module HubSatellite
         },
       }
     end
+
+    # Lets redborder-webui back up network devices only a client proxy can
+    # reach: redborder-proxy's rb_device_shell opens an interactive SSH shell
+    # on the device and prints the session transcript. The request (with the
+    # device password) goes on stdin, never in args, and is validated by the
+    # script itself. Its output (gzipped, base64) is capped below the hub's
+    # 512 KB message limit. The script ends the session on its own (connect
+    # plus max_session, at most 600s, the longest a hub /dispatch waits), so
+    # timeout_seconds is only a backstop.
+    def device_shell_satellite_commands
+      {
+        'device_shell' => {
+          'executable' => '/usr/lib/redborder/bin/rb_device_shell',
+          'stdin_param' => 'request',
+          'param_rules' => { 'request' => { 'required' => true } },
+          'max_bytes' => 491520,
+          'timeout_seconds' => 600,
+        },
+      }
+    end
   end
 end
