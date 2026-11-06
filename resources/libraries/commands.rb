@@ -27,5 +27,68 @@ module HubSatellite
         },
       }
     end
+
+    # Lets redborder-webui manage its ephemeral config-backup FTP/SFTP
+    # accounts on a node it can't SSH into (a client proxy), through
+    # cookbook-vsftpd's account script. Every argument is checked here and
+    # again by the script itself. read's output (gzipped, base64) is capped
+    # below the hub's 512 KB message limit; write takes its content on stdin,
+    # which needs redborder-satellite's stdin_param support.
+    def ftp_backup_satellite_commands
+      script = '/usr/lib/redborder/bin/rb_ephemeral_ftp_account.sh'
+      username = { 'regex' => '^ftp-[0-9a-f]{20}$', 'required' => true }
+      filename = { 'regex' => '^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$', 'required' => true }
+      {
+        'ftp_backup_account_create' => {
+          'executable' => script,
+          'args' => ['create'],
+          'timeout_seconds' => 30,
+        },
+        'ftp_backup_account_delete' => {
+          'executable' => script,
+          'args' => ['delete', '$username'],
+          'param_rules' => { 'username' => username },
+          'timeout_seconds' => 30,
+        },
+        'ftp_backup_file_read' => {
+          'executable' => script,
+          'args' => ['read', '$username', '$filename'],
+          'param_rules' => { 'username' => username, 'filename' => filename },
+          'max_bytes' => 491520,
+          'timeout_seconds' => 60,
+        },
+        'ftp_backup_file_write' => {
+          'executable' => script,
+          'args' => ['write', '$username', '$filename'],
+          'stdin_param' => 'content',
+          'param_rules' => {
+            'username' => username,
+            'filename' => filename,
+            'content' => { 'regex' => '^[A-Za-z0-9+/=]+$', 'required' => true },
+          },
+          'timeout_seconds' => 60,
+        },
+      }
+    end
+
+    # Lets redborder-webui back up network devices only a client proxy can
+    # reach: redborder-proxy's rb_device_shell opens an interactive SSH shell
+    # on the device and prints the session transcript. The request (with the
+    # device password) goes on stdin, never in args, and is validated by the
+    # script itself. Its output (gzipped, base64) is capped below the hub's
+    # 512 KB message limit. The script ends the session on its own (connect
+    # plus max_session, at most 600s, the longest a hub /dispatch waits), so
+    # timeout_seconds is only a backstop.
+    def device_shell_satellite_commands
+      {
+        'device_shell' => {
+          'executable' => '/usr/lib/redborder/bin/rb_device_shell',
+          'stdin_param' => 'request',
+          'param_rules' => { 'request' => { 'required' => true } },
+          'max_bytes' => 491520,
+          'timeout_seconds' => 600,
+        },
+      }
+    end
   end
 end
