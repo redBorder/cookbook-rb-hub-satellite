@@ -33,6 +33,7 @@ action :add do
 
     commands = (commands_input && !commands_input.empty?) ? commands_input : default_satellite_commands
     commands = commands.merge(ftp_backup_satellite_commands) if new_resource.ftp_backup
+    commands = commands.merge(device_shell_satellite_commands) if new_resource.device_shell
 
     resource_data = {
       'hub_url' => hub_url,
