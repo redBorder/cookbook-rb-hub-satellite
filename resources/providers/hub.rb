@@ -12,10 +12,16 @@ action :add do
     hub_hosts = new_resource.hub_hosts
     hub_port = new_resource.hub_port
     auth_token = new_resource.auth_token
+    registration_token = new_resource.registration_token
     authorized_keys_dir = new_resource.authorized_keys_dir
     advertise_peers = new_resource.advertise_peers
     service_name = 'redborder-hub'
     package_name = 'redborder-hub'
+
+    if auth_token.to_s.strip.empty?
+      Chef::Log.error('redborder-hub: auth_token is not set (passwords/hub data bag), skipping hub configuration')
+      next
+    end
 
     dnf_package package_name do
       action :upgrade
@@ -69,12 +75,13 @@ action :add do
       'peers' => peer_urls.sort.uniq,
       'advertise_peers' => advertise_peers,
     }
+    resource_data['registration_token'] = registration_token unless registration_token.to_s.empty?
 
     template "#{config_dir}/hub.json" do
       source 'hub.json.erb'
       owner user
       group user
-      mode '0644'
+      mode '0640'
       cookbook 'rb-hub-satellite'
       retries 2
       variables(resource: resource_data)
