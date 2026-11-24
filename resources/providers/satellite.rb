@@ -48,7 +48,7 @@ action :add do
       source 'satellite.json.erb'
       owner user
       group user
-      mode '0644'
+      mode '0640'
       cookbook 'rb-hub-satellite'
       retries 2
       variables(resource: resource_data)
