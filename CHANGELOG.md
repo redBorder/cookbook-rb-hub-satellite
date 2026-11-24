@@ -1,6 +1,19 @@
 cookbook-rb-hub-satellite CHANGELOG
 ===============
 
+## 1.1.0
+
+  - Miguel Negrón
+    - [5472f4f] Merge pull request #5 from redBorder/feature/#26715_make_backup_policy_compatible_with_proxies
+  - manegron
+    - [5472f4f] Merge pull request #5 from redBorder/feature/#26715_make_backup_policy_compatible_with_proxies
+    - [4fdcafe] Merge branch 'development' into feature/#26715_make_backup_policy_compatible_with_proxies
+  - Juan Soto
+    - [300a899] Add device_shell option to rbsat_config to register the device_shell command
+    - [3ba28c9] Add device_shell satellite command to run rb_device_shell on proxies
+    - [15c198d] Add ftp_backup option to rbsat_config to register the FTP backup commands
+    - [b50e4df] Add ftp_backup satellite commands to manage config-backup FTP accounts
+
 ## 1.0.0
 
   - Miguel Negrón
